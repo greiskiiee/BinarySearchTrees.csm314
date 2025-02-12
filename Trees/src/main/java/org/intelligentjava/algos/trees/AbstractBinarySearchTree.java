@@ -6,24 +6,31 @@ package org.intelligentjava.algos.trees;
  * trees can have slightly different nodes with more info). This way some code
  * from standart binary search tree can be reused for other kinds of binary
  * trees.
- * 
+ *
  * @author Ignas Lelys
  * @created Jun 29, 2011
- * 
+ *
  */
 public abstract class AbstractBinarySearchTree {
 
-    /** Root node where whole tree starts. */
+    /**
+     * Root node where whole tree starts.
+     */
     public Node root;
 
-    /** Tree size. */
+    /**
+     * Tree size.
+     */
     protected int size;
 
+    public RedBlackNode color;
+
     /**
-     * Because this is abstract class and various trees have different additional information on 
-     * different nodes subclasses uses this abstract method to create nodes (maybe of class {@link Node}
-     * or maybe some different node sub class).
-     * 
+     * Because this is abstract class and various trees have different
+     * additional information on different nodes subclasses uses this abstract
+     * method to create nodes (maybe of class {@link Node} or maybe some
+     * different node sub class).
+     *
      * @param value Value that node will have.
      * @param parent Node's parent.
      * @param left Node's left child.
@@ -35,9 +42,8 @@ public abstract class AbstractBinarySearchTree {
     /**
      * Finds a node with concrete value. If it is not found then null is
      * returned.
-     * 
-     * @param element
-     *            Element value.
+     *
+     * @param element Element value.
      * @return Node with value provided, or null if not found.
      */
     public Node search(int element) {
@@ -54,9 +60,8 @@ public abstract class AbstractBinarySearchTree {
 
     /**
      * Insert new element to tree.
-     * 
-     * @param element
-     *            Element to insert.
+     *
+     * @param element Element to insert.
      */
     public Node insert(int element) {
         if (root == null) {
@@ -89,12 +94,11 @@ public abstract class AbstractBinarySearchTree {
 
     /**
      * Removes element if node with such value exists.
-     * 
-     * @param element
-     *            Element value to remove.
-     * 
+     *
+     * @param element Element value to remove.
+     *
      * @return New node that is in place of deleted node. Or null if element for
-     *         delete was not found.
+     * delete was not found.
      */
     public Node delete(int element) {
         Node deleteNode = search(element);
@@ -107,12 +111,11 @@ public abstract class AbstractBinarySearchTree {
 
     /**
      * Delete logic when node is already found.
-     * 
-     * @param deleteNode
-     *            Node that needs to be deleted.
-     * 
+     *
+     * @param deleteNode Node that needs to be deleted.
+     *
      * @return New node that is in place of deleted node. Or null if element for
-     *         delete was not found.
+     * delete was not found.
      */
     protected Node delete(Node deleteNode) {
         if (deleteNode != null) {
@@ -136,7 +139,7 @@ public abstract class AbstractBinarySearchTree {
                 }
                 size--;
             }
-    
+
             return nodeToReturn;
         }
         return null;
@@ -144,12 +147,11 @@ public abstract class AbstractBinarySearchTree {
 
     /**
      * Put one node from tree (newNode) to the place of another (nodeToReplace).
-     * 
-     * @param nodeToReplace
-     *            Node which is replaced by newNode and removed from tree.
-     * @param newNode
-     *            New node.
-     * 
+     *
+     * @param nodeToReplace Node which is replaced by newNode and removed from
+     * tree.
+     * @param newNode New node.
+     *
      * @return New replaced node.
      */
     private Node transplant(Node nodeToReplace, Node newNode) {
@@ -190,9 +192,8 @@ public abstract class AbstractBinarySearchTree {
 
     /**
      * Get next element element who is bigger than provided element.
-     * 
-     * @param element
-     *            Element for whom descendand element is searched
+     *
+     * @param element Element for whom descendand element is searched
      * @return Successor value.
      */
     // TODO Predecessor
@@ -229,7 +230,6 @@ public abstract class AbstractBinarySearchTree {
     }
 
     /*-------------------PRIVATE HELPER METHODS-------------------*/
-
     private void printTreeInOrder(Node entry) {
         if (entry != null) {
             printTreeInOrder(entry.left);
@@ -292,13 +292,12 @@ public abstract class AbstractBinarySearchTree {
             return parentNode;
         }
     }
-    
-    //-------------------------------- TREE PRINTING ------------------------------------
 
+    //-------------------------------- TREE PRINTING ------------------------------------
     public void printTree() {
         printSubtree(root);
     }
-    
+
     public void printSubtree(Node node) {
         if (node.right != null) {
             printTree(node.right, true, "");
@@ -308,7 +307,7 @@ public abstract class AbstractBinarySearchTree {
             printTree(node.left, false, "");
         }
     }
-    
+
     private void printNodeValue(Node node) {
         if (node.value == null) {
             System.out.print("<null>");
@@ -317,7 +316,7 @@ public abstract class AbstractBinarySearchTree {
         }
         System.out.println();
     }
-    
+
     private void printTree(Node node, boolean isRight, String indent) {
         if (node.right != null) {
             printTree(node.right, true, indent + (isRight ? "        " : " |      "));
@@ -335,8 +334,11 @@ public abstract class AbstractBinarySearchTree {
         }
     }
 
-
     public static class Node {
+
+        RedBlackTree.ColorEnum color;
+
+        // RedBlackTree.ColorEnum color;
         public Node(Integer value, Node parent, Node left, Node right) {
             super();
             this.value = value;
@@ -349,7 +351,7 @@ public abstract class AbstractBinarySearchTree {
         public Node parent;
         public Node left;
         public Node right;
-        
+
         public boolean isLeaf() {
             return left == null && right == null;
         }
@@ -364,18 +366,23 @@ public abstract class AbstractBinarySearchTree {
 
         @Override
         public boolean equals(Object obj) {
-            if (this == obj)
+            if (this == obj) {
                 return true;
-            if (obj == null)
+            }
+            if (obj == null) {
                 return false;
-            if (getClass() != obj.getClass())
+            }
+            if (getClass() != obj.getClass()) {
                 return false;
+            }
             Node other = (Node) obj;
             if (value == null) {
-                if (other.value != null)
+                if (other.value != null) {
                     return false;
-            } else if (!value.equals(other.value))
+                }
+            } else if (!value.equals(other.value)) {
                 return false;
+            }
             return true;
         }
 

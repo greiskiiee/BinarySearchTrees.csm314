@@ -28,6 +28,12 @@
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
 		</dependency>
+
+        <!-- <dependency>
+            <groupId>jdepend</groupId>
+            <artifactId>jdepend</artifactId>
+            <version>2.10</version>
+        </dependency> -->
 	</dependencies>
 	
 	<build>
@@ -60,6 +66,18 @@
                                 </transformer>
                             </transformers>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jdeps-plugin</artifactId>
+                <version>3.1.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>jdkinternals</goal> <!-- This goal analyzes the dependencies -->
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
@@ -105,5 +123,15 @@
             </plugins>
         </pluginManagement>
     </build>
+
+    <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>jdepend-maven-plugin</artifactId>
+        <version>2.1</version>
+      </plugin>
+    </plugins>
+  </reporting>
   
 </project>
